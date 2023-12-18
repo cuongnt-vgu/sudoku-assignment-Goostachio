@@ -9,5 +9,5 @@ typedef struct HiddenPairs_impl {
 } HiddenPairs;
 
 int check_hidden_pairs(Cell **p_cells, int value);
-void find_hidden_pairs(Cell **p_cells, HiddenPairs *p_hidden_pairs, int *p_counter);
+void find_hidden_pairs(Cell **p_cells, HiddenPairs *p_hidden_pairs);
 int hidden_pairs(SudokuBoard *p_board);
