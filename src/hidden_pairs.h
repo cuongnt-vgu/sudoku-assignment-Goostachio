@@ -2,10 +2,12 @@
 
 #include "sudoku.h"
 
-typedef struct HiddenPairsCell {
-    Cell *cell;
-    int candidate1;
-    int candidate2;
-} HiddenPairsCell;
+typedef struct HiddenPairs_impl {
+    Cell **p_cells;
+    int index;
+    int values[2];
+} HiddenPairs;
 
-int hidden_pairs(SudokuBoard *board);
+int check_hidden_pairs(Cell **p_cells, int value);
+void find_hidden_pairs(Cell **p_cells, HiddenPairs *p_hidden_pairs, int *p_counter);
+int hidden_pairs(SudokuBoard *p_board);
