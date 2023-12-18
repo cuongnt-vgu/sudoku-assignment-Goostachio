@@ -14,8 +14,17 @@ int check_cell_contains_candidates(Cell* p_cell, int candidates[], int num_candi
 // Function to check if the current group of cells forms a hidden triple
 int check_hidden_triples_in_group(Cell* group[], int indices[], int candidates[], int num_candidates);
 
-// Function to find hidden triples in a group (row, column, or box)
+void find_possible_triples(Cell* group[], int* possible_triples, int* possible_triples_count);
+
+void search_hidden_triples(
+    Cell* group[], int possible_triples[], int possible_triples_count,
+    HiddenTriples p_hidden_triples[], int* p_counter
+);
+
+// Function to find possible hidden triples in a group and update the count
 void find_hidden_triples_in_group(Cell* group[], HiddenTriples p_hidden_triples[], int* p_counter);
 
-// Function to find hidden triples in the entire Sudoku board
+// Function to search for valid hidden triples combinations
+void search_hidden_triples(Cell* group[], int possible_triples[], int possible_triples_count, HiddenTriples p_hidden_triples[], int* p_counter);
+
 int hidden_triples(SudokuBoard *p_board);
