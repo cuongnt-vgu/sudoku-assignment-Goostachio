@@ -1,5 +1,6 @@
 #include "hidden_triples.h"
-
+#include <stdlib.h>
+#include <stdio.h>
 // Function to check if a cell contains any of the given candidates
 int check_cell_contains_candidates(Cell* p_cell, int candidates[], int num_candidates) {
     for (int i = 0; i < num_candidates; i++) {

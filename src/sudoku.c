@@ -7,8 +7,8 @@
 #include "hidden_singles.h"
 #include "hidden_pairs.h"
 #include "hidden_triples.h"
-//#include "naked_pairs.h"
-//#include "naked_triples.h"
+#include "naked_pairs.h"
+#include "naked_triples.h"
 
 void print_board(SudokuBoard *p_board) {
     for (int i = 0; i < BOARD_SIZE; i++) {
