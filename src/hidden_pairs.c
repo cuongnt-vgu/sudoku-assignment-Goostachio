@@ -39,7 +39,8 @@ void find_pairs(Cell **p_cells, HiddenPairs *p_hidden_pairs, int *p_counter) {
     int hidden_candidates[BOARD_SIZE] = {0};
 
     for (int i = 0; i < BOARD_SIZE; i++) {
-        if (p_cells[i]->num_candidates < 2) {
+        Cell *cell = p_cells[i];
+        if (cell->num_candidates < 2) {
             continue;
         }
 
@@ -47,8 +48,9 @@ void find_pairs(Cell **p_cells, HiddenPairs *p_hidden_pairs, int *p_counter) {
         int *candidates = get_candidates(p_cells[i]);
         
         for (int j = 0; j < p_cells[i]->num_candidates; j++) {
-            if (check_board(p_cells, candidates[j])) {
-                hidden_candidates[count++] = candidates[j];
+            int candidate = cell->candidates[j];
+            if (check_board(p_cells, candidate)) {
+                hidden_candidates[count++] = candidate;
             }
         }
 
