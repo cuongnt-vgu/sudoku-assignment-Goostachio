@@ -1,6 +1,6 @@
 #include "hidden_singles.h"
 #include <stdlib.h>
-int find_hidden_single_values(Cell **p_cells, int *hidden_single_values)
+int find_values(Cell **p_cells, int *hidden_single_values)
 {
     // Initialize an array to store the count of each candidate in the cells
     int candidate_counts[BOARD_SIZE] = {0};
@@ -17,7 +17,7 @@ int find_hidden_single_values(Cell **p_cells, int *hidden_single_values)
                     candidate_counts[j]++;
                 }
             }
-        }     
+        }
     }
 
     // Check for hidden single values
@@ -34,10 +34,10 @@ int find_hidden_single_values(Cell **p_cells, int *hidden_single_values)
     return counter;
 }
 
-void find_hidden_single(Cell **p_cells, HiddenSingle *p_hidden_singles, int *p_counter)
+void find_cells(Cell **p_cells, HiddenSingle *p_hidden_singles, int *p_counter)
 {
     int hidden_single_values[BOARD_SIZE];
-    int num_hidden_singles = find_hidden_single_values(p_cells, hidden_single_values);
+    int num_hidden_singles = find_values(p_cells, hidden_single_values);
 
     // Iterate through the cells to find hidden singles
     for (int i = 0; i < BOARD_SIZE; i++)
@@ -62,7 +62,6 @@ void find_hidden_single(Cell **p_cells, HiddenSingle *p_hidden_singles, int *p_c
                 }
                 
             }
-
             free(candidates);
         }
     }
@@ -76,9 +75,9 @@ int hidden_singles(SudokuBoard *p_board)
     // Check hidden singles in rows, columns and  boxes
     for (int i = 0; i < BOARD_SIZE; i++)
     {
-        find_hidden_single(p_board->p_rows[i], hidden_singles, &counter);
-        find_hidden_single(p_board->p_cols[i], hidden_singles, &counter);
-        find_hidden_single(p_board->p_boxes[i], hidden_singles, &counter);
+        find_cells(p_board->p_rows[i], hidden_singles, &counter);
+        find_cells(p_board->p_cols[i], hidden_singles, &counter);
+        find_cells(p_board->p_boxes[i], hidden_singles, &counter);
     }
 int offset = 0; //to maintain the counter
     for (int i = 0; i < counter; i++)
