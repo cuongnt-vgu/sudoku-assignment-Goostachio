@@ -6,12 +6,12 @@
 #include <unistd.h>
 #include <wchar.h>
 
-#include "../src/sudoku.h"
-#include "../src/hidden_singles.h"
-#include "../src/hidden_pairs.h"
-#include "../src/hidden_triples.h"
-#include "../src/naked_pairs.h"
-#include "../src/naked_triples.h"
+#include "/Users/daohongminh/Downloads/sudoku/sudoku-assignment-Goostachio/src/sudoku.h"
+#include "/Users/daohongminh/Downloads/sudoku/sudoku-assignment-Goostachio/src/hidden_singles.h"
+#include "/Users/daohongminh/Downloads/sudoku/sudoku-assignment-Goostachio/src/hidden_pairs.h"
+#include "/Users/daohongminh/Downloads/sudoku/sudoku-assignment-Goostachio/src/hidden_triples.h"
+#include "/Users/daohongminh/Downloads/sudoku/sudoku-assignment-Goostachio/src/naked_pairs.h"
+#include "/Users/daohongminh/Downloads/sudoku/sudoku-assignment-Goostachio/src/naked_triples.h"
 
 // Verbosity of test runner. Overridden via compilation flag
 #ifdef VERBOSE

@@ -65,7 +65,9 @@ void print_solution(SudokuBoard *p_board)
             free(candidates);
         }
     }
+    printf("\n");
 }
+
 
 void set_candidate(Cell *cell, int value)
 {
@@ -128,15 +130,13 @@ void load_sudoku(SudokuBoard *p_board, char *textData)
         {
             int candidates[] = {textData[i] - '0'};
             int num_candidates = 1;
-            set_candidates(&(p_board->data[i / BOARD_SIZE][i % BOARD_SIZE]),
-                           candidates, num_candidates);
+            set_candidates(&(p_board->data[i / BOARD_SIZE][i % BOARD_SIZE]), candidates, num_candidates);
         }
         else
         {
             int candidates[] = {1, 2, 3, 4, 5, 6, 7, 8, 9};
             int num_candidates = BOARD_SIZE;
-            set_candidates(&(p_board->data[i / BOARD_SIZE][i % BOARD_SIZE]),
-                           candidates, num_candidates);
+            set_candidates(&(p_board->data[i / BOARD_SIZE][i % BOARD_SIZE]), candidates, num_candidates);
         }
     }
 }
