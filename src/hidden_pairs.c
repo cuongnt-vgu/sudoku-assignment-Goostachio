@@ -1,63 +1,47 @@
 #include "hidden_pairs.h"
-#include <stdlib.h>
 
-// Function to check if two cells contain the same pair of candidates.
-int are_cells_hidden_pairs(Cell *cell1, Cell *cell2) {
-    if (cell1->num_candidates != 2 || cell2->num_candidates != 2)
-        return 0;
+int hidden_pairs(SudokuBoard *board) {
+    int pairCount = 0;
 
-    for (int i = 0; i < 2; i++) {
-        if (!is_candidate(cell1, cell2->candidates[i]) || !is_candidate(cell2, cell1->candidates[i]))
-            return 0;
-    }
+    for (int unit = 0; unit < BOARD_SIZE; unit++) {
+        HiddenPairsCell hiddenPairs[BOARD_SIZE];
+        int hiddenPairCount = 0;
 
-    return 1;
-}
+        for (int i = 0; i < BOARD_SIZE; i++) {
+            Cell *cell = unit == 0 ? board->p_rows[i][0] : unit == 1 ? board->p_cols[i][0] : board->p_boxes[i][0];
 
-// Find hidden pairs in a set of cells.
-int find_hidden_pairs(Cell **p_cells, HiddenPair *p_hidden_pairs, int *p_counter) {
-    int hidden_pairs_found = 0;
+            if (cell->num_candidates == 2) {
+                int candidate1 = cell->candidates[0];
+                int candidate2 = cell->candidates[1];
+                hiddenPairs[hiddenPairCount++] = (HiddenPairsCell){cell, candidate1, candidate2};
+            }
+        }
 
-    for (int i = 0; i < BOARD_SIZE - 1; i++) {
-        if (p_cells[i]->num_candidates != 2)
-            continue;
+        for (int i = 0; i < hiddenPairCount - 1; i++) {
+            for (int j = i + 1; j < hiddenPairCount; j++) {
+                if (hiddenPairs[i].candidate1 == hiddenPairs[j].candidate1 &&
+                    hiddenPairs[i].candidate2 == hiddenPairs[j].candidate2) {
+                    // Found a hidden pair
+                    for (int k = 0; k < BOARD_SIZE; k++) {
+                        Cell *cell1 = hiddenPairs[i].cell;
+                        Cell *cell2 = hiddenPairs[j].cell;
 
-        for (int j = i + 1; j < BOARD_SIZE; j++) {
-            if (are_cells_hidden_pairs(p_cells[i], p_cells[j])) {
-                p_hidden_pairs[(*p_counter)].p_cells = p_cells;
-                p_hidden_pairs[(*p_counter)].indices[0] = i;
-                p_hidden_pairs[(*p_counter)].indices[1] = j;
-                p_hidden_pairs[(*p_counter)].values[0] = p_cells[i]->candidates[0];
-                p_hidden_pairs[(*p_counter)].values[1] = p_cells[i]->candidates[1];
-                (*p_counter)++;
-                hidden_pairs_found = 1;
-                break;
+                        if (cell1 != cell2 && cell1->num_candidates > 2) {
+                            unset_candidate(cell1, hiddenPairs[i].candidate1);
+                            unset_candidate(cell1, hiddenPairs[i].candidate2);
+                        }
+
+                        if (cell2 != cell1 && cell2->num_candidates > 2) {
+                            unset_candidate(cell2, hiddenPairs[i].candidate1);
+                            unset_candidate(cell2, hiddenPairs[i].candidate2);
+                        }
+                    }
+
+                    pairCount++;
+                }
             }
         }
     }
 
-    return hidden_pairs_found;
-}
-
-// Apply hidden pairs strategy to a Sudoku board.
-int hidden_pairs(SudokuBoard *p_board) {
-    int hidden_pair_count = 0;
-    HiddenPair hidden_pairs[BOARD_SIZE * BOARD_SIZE];
-
-    for (int i = 0; i < BOARD_SIZE; i++) {
-        hidden_pair_count += find_hidden_pairs(p_board->p_rows[i], &hidden_pairs[hidden_pair_count], &hidden_pair_count);
-        hidden_pair_count += find_hidden_pairs(p_board->p_cols[i], &hidden_pairs[hidden_pair_count], &hidden_pair_count);
-        hidden_pair_count += find_hidden_pairs(p_board->p_boxes[i], &hidden_pairs[hidden_pair_count], &hidden_pair_count);
-    }
-
-    for (int i = 0; i < hidden_pair_count; i++) {
-        for (int j = 0; j < BOARD_SIZE; j++) {
-            if (j != hidden_pairs[i].indices[0] && j != hidden_pairs[i].indices[1]) {
-                unset_candidate(hidden_pairs[i].p_cells[j], hidden_pairs[i].values[0]);
-                unset_candidate(hidden_pairs[i].p_cells[j], hidden_pairs[i].values[1]);
-            }
-        }
-    }
-
-    return hidden_pair_count;
+    return pairCount;
 }
