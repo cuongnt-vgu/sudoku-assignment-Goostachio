@@ -226,6 +226,7 @@ printf("Entering while loop\n"); //debug print statement
             printf("hidden_singles %d\n", solved_counter);
             continue;
         }
+
         solved_counter = naked_pairs(board);
         if (solved_counter)
         {
