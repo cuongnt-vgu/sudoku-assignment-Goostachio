@@ -2,7 +2,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-//check board for hidden pairs
 int check_board(Cell **p_cells, int value) {
     int count = 0;
     for (int i = 0; i < BOARD_SIZE; i++) {
@@ -38,7 +37,7 @@ void find_value(Cell **p_cells, HiddenPairs *p_hidden_pairs,  int* hidden_candid
 void find_pairs(Cell **p_cells, HiddenPairs *p_hidden_pairs, int *p_counter) {
     int hidden_candidates[BOARD_SIZE] = {0};
 
-    for (int i = 0; i < BOARD_SIZE; i++) {
+    for (int i = 0; i < BOARD_SIZE; i++){
         if (p_cells[i]->num_candidates < 2) {
             continue;
         }
@@ -77,5 +76,5 @@ int hidden_pairs(SudokuBoard *p_board) {
         set_candidates(p_cells[p_hidden_pairs[i].index], p_hidden_pairs[i].values, 2);
     }
 
-    return counter / 2; //count for a set of hidden pairs
+    return counter / 2; 
 }
